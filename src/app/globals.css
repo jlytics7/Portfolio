@@ -1,26 +1,256 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   THEME VARIANTS
+   Dark mode is driven by `data-theme` on <html>, which the inline script in
+   layout.tsx sets before first paint. No media query, no flash.
+   ========================================================================== */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ==========================================================================
+   DESIGN TOKENS
+
+   Two sets of the same names. Components only ever reference the semantic
+   names (`bg-canvas`, `text-ink`, `border-line`), so switching themes is
+   purely a matter of these values changing.
+
+   All pairings below were checked against WCAG AA:
+     light  ink on canvas  ~18:1   muted on canvas  ~5.9:1
+     dark   ink on canvas  ~15:1   muted on canvas  ~8.3:1
+     accent text (light)    7.4:1  accent text (dark) 13.3:1
+     accent-fg on accent-solid  5.6:1 (light and dark)
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --canvas: #fafbfb;
+  --canvas-subtle: #f2f5f5;
+  --surface: #ffffff;
+  --surface-hover: #f7fafa;
+
+  --line: #e3e9e9;
+  --line-strong: #cfd9da;
+
+  --ink: #0c1416;
+  --ink-muted: #55676c;
+  --ink-subtle: #79898e;
+
+  /* Accent, split by job: `accent` for text/icons, `accent-solid` for fills. */
+  --accent: #0f5f58;
+  --accent-solid: #12a594;
+  --accent-solid-hover: #0e8c7e;
+  --accent-fg: #04201d;
+  --accent-soft: #e4f5f2;
+
+  --warn: #8a5a08;
+  --warn-soft: #fdf3dc;
+
+  --grain-opacity: 0.035;
+  --glow: rgba(18, 165, 148, 0.14);
 }
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #080c0e;
+  --canvas-subtle: #0d1215;
+  --surface: #101619;
+  --surface-hover: #151d21;
+
+  --line: #1e282c;
+  --line-strong: #2c3a3f;
+
+  --ink: #e9f0f1;
+  --ink-muted: #9aacb1;
+  --ink-subtle: #74878c;
+
+  --accent: #5eead4;
+  --accent-solid: #2dd4bf;
+  --accent-solid-hover: #5eead4;
+  --accent-fg: #04201d;
+  --accent-soft: rgba(45, 212, 191, 0.1);
+
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.12);
+
+  --grain-opacity: 0.05;
+  --glow: rgba(45, 212, 191, 0.12);
+}
+
+/* ==========================================================================
+   TAILWIND THEME MAPPING
+
+   `inline` is important: the generated utilities emit `var(--canvas)` rather
+   than a frozen hex value, so they respond to the [data-theme] switch.
+   ========================================================================== */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: var(--canvas);
+  --color-canvas-subtle: var(--canvas-subtle);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-solid-hover: var(--accent-solid-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  /* Section rhythm — one source of truth for vertical spacing. */
+  --spacing-section: 6rem;
+
+  --shadow-card: 0 1px 2px -1px rgb(9 20 22 / 0.08),
+    0 8px 24px -12px rgb(9 20 22 / 0.12);
+  --shadow-card-hover: 0 2px 4px -1px rgb(9 20 22 / 0.1),
+    0 18px 40px -18px rgb(9 20 22 / 0.2);
+  --shadow-lift: 0 24px 60px -28px rgb(9 20 22 / 0.28);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  html {
+    /* Room for the sticky header when jumping to an anchor. */
+    scroll-padding-top: 6.5rem;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings use the display face and a slightly tighter rhythm. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--accent-solid);
+    color: var(--accent-fg);
+  }
+
+  /* One visible, consistent focus treatment everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--accent-solid);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Thin scrollbar that doesn't fight the palette. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  /* Anchored sections must clear the sticky nav. */
+  section[id] {
+    scroll-margin-top: 5.5rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   UTILITIES
+   ========================================================================== */
+
+/**
+ * Fine film-grain layer. Sits above the background, below content, and gives
+ * flat areas a little texture so large dark regions don't look like dead space.
+ */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/** Hairline rule that reads correctly in both themes. */
+@utility hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--line-strong),
+    transparent
+  );
+}
+
+/** Small monospace label used above every section heading. */
+@utility overline {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/** Placeholder link affordance — dashed, with a tooltip explaining why. */
+@utility placeholder-link {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--warn);
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+
+   Framer Motion is also told to stand down via useReducedMotion, but this
+   catches CSS-level smooth scrolling and transitions too.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

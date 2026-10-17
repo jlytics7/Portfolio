@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1067" viewBox="0 0 1600 1067" role="img" aria-label="Photography placeholder">
+  <defs>
+    <linearGradient id="bg-photo-05" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b1013"/>
+      <stop offset="1" stop-color="#151e22"/>
+    </linearGradient>
+    <pattern id="grid-photo-05" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#26343a" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow-photo-05" cx="0.5" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#5eead4" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#5eead4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1067" fill="url(#bg-photo-05)"/>
+  <rect width="1600" height="1067" fill="url(#grid-photo-05)" opacity="0.35"/>
+  <rect width="1600" height="1067" fill="url(#glow-photo-05)"/>
+  <g>
+      <circle cx="800" cy="469.48" r="245.41" fill="none" stroke="#5eead4" stroke-opacity="0.4" stroke-width="3.2009999999999996"/>
+      <circle cx="800" cy="469.48" r="98.164" fill="#5eead4" fill-opacity="0.2"/></g>
+  <text x="800" y="971" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="30" letter-spacing="6" fill="#8ba1a6">PHOTO PLACEHOLDER</text>
+  <text x="800" y="1011" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="23" letter-spacing="3" fill="#54666b">REPLACE IN SRC/DATA/GALLERY.TS</text>
+</svg>
