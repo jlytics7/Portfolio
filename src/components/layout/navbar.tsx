@@ -47,26 +47,23 @@ export function Navbar() {
       >
         <nav
           aria-label="Main"
-          className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-8"
+          className="mx-auto grid h-16 w-full max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:px-8"
         >
           {/* Wordmark ---------------------------------------------------- */}
           <a
             href="#home"
-            className="group flex shrink-0 items-center gap-2.5"
+            className="group justify-self-start"
             aria-label={`${profile.fullName} — back to top`}
           >
-            <span
-              aria-hidden
-              className="grid size-9 place-items-center rounded-xl border border-line-strong bg-surface font-mono text-[0.6875rem] font-semibold tracking-wider text-accent transition-colors duration-200 group-hover:border-accent-solid"
-            >
+            <span className="font-display text-[1.375rem] font-extrabold tracking-tight text-ink">
               {profile.initials}
-            </span>
-            <span className="hidden font-display text-sm font-semibold tracking-tight text-ink xl:block">
-              {profile.shortName}
+              <span className="text-accent-solid transition-colors duration-200 group-hover:text-accent">
+                .
+              </span>
             </span>
           </a>
 
-          {/* Desktop links ----------------------------------------------- */}
+          {/* Desktop links — optically centred by the grid, not by flex ----- */}
           <ul className="hidden items-center gap-1 lg:flex">
             {navItems.map((item) => {
               const isActive = item.id === activeId;
@@ -77,33 +74,38 @@ export function Navbar() {
                     href={`#${item.id}`}
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
-                      "relative isolate block rounded-full px-3.5 py-2 text-[0.8125rem] font-medium transition-colors duration-200",
+                      "relative block px-3 py-2.5 text-[0.75rem] font-medium tracking-[0.12em] uppercase transition-colors duration-200",
                       isActive
-                        ? "text-accent"
+                        ? "text-ink"
                         : "text-ink-muted hover:text-ink",
                     )}
                   >
+                    {item.label}
+                    {/* The underline slides between items rather than fading. */}
                     {isActive ? (
                       <m.span
                         aria-hidden
-                        layoutId="nav-active-pill"
-                        className="absolute inset-0 -z-10 rounded-full border border-line bg-canvas-subtle"
+                        layoutId="nav-active-rule"
+                        className="absolute inset-x-2.5 bottom-0.5 h-[2px] rounded-full bg-accent-solid"
                         transition={{
                           type: "spring",
-                          stiffness: 380,
-                          damping: 34,
+                          stiffness: 420,
+                          damping: 36,
                         }}
                       />
                     ) : null}
-                    {item.label}
                   </a>
                 </li>
               );
             })}
           </ul>
 
-          {/* Actions ------------------------------------------------------ */}
-          <div className="flex shrink-0 items-center gap-2">
+          {/* Actions ------------------------------------------------------
+              `col-start-3` matters: on mobile the link list is `display:none`,
+              which removes its `auto` track from the grid entirely. Without an
+              explicit placement the actions would slide into column 2 and stop
+              being right-aligned. */}
+          <div className="col-start-3 flex shrink-0 items-center justify-end gap-2">
             <ThemeToggle />
             <ResumeButton
               variant="secondary"

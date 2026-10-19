@@ -53,7 +53,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | Styling    | Tailwind CSS v4 — CSS-first config, no `tailwind.config.js`             |
 | Animation  | Framer Motion (`LazyMotion` + `domMax` to keep the bundle down)         |
 | Icons      | lucide-react, plus inline brand marks for GitHub/LinkedIn               |
-| Fonts      | Sora (display), Inter (body), JetBrains Mono (labels) — self-hosted     |
+| Fonts      | Archivo Black (hero name), Sora (headings), Inter (body), JetBrains Mono (labels) — self-hosted |
 
 No UI component library. Every component is hand-built against one shared set of design tokens, so
 nothing looks like a stock template.
@@ -101,14 +101,7 @@ placeholder. Your name, location, contact links, education, experience, about pr
 and all four certifications are already filled in from your LinkedIn profile, your resume and your
 own certificate PDFs. Work through what's left before sending the site to anyone:
 
-### 1. Portrait — `src/data/profile.ts`
-
-`profile.photo` points at a generated placeholder. Drop a real photo into
-`public/images/profile/` and update the path (a 4:5 portrait crop works best). The hero's
-"Portrait placeholder" caption disappears on its own once the path no longer contains
-`placeholder`.
-
-### 2. Skills — `src/data/skills.ts`
+### 1. Skills — `src/data/skills.ts`
 
 Every skill listed now traces back to a document you wrote: the SKILLS list on your resume, the
 Fortinet courses you completed, or the analytics and creative topics from your original brief. The
@@ -123,7 +116,7 @@ or a course, add the category back; the file's header comment shows how.
 No skill anywhere on the site carries a percentage or a bar. If you ever add a `level`, make it one
 you would defend in an interview.
 
-### 3. Projects — `src/data/projects.ts`
+### 2. Projects — `src/data/projects.ts`
 
 All three projects (Allora, TechZone, Isla Paint Center) currently have `status: "unconfirmed"`,
 which renders a neutral **"TBC"** chip. Your LinkedIn doesn't list projects, so these are still
@@ -140,12 +133,12 @@ delivered.
 `repoUrl` and `demoUrl` are `null`, which renders the buttons as **disabled with an explanation**
 instead of linking somewhere that doesn't exist. Set them to real URLs when those things exist.
 
-### 4. Photography — `src/data/gallery.ts`
+### 3. Photography — `src/data/gallery.ts`
 
 Six generated placeholder tiles. Replace with your own images, updating `src`, `alt`, `width` and
 `height` for each. Set `showCreativeSection` to `false` to hide the section completely.
 
-### 5. Site URL — `src/data/site.ts`
+### 4. Site URL — `src/data/site.ts`
 
 The URL is resolved in this order: `NEXT_PUBLIC_SITE_URL` → Vercel's production URL →
 `https://jessicamiranda.dev` (the domain on your LinkedIn, used for local development and for any
@@ -158,7 +151,7 @@ sitemap.
 - **Anything else** → set `NEXT_PUBLIC_SITE_URL` (see `.env.example`) or edit the fallback in
   `site.ts`, or link previews and the sitemap will point at a domain that isn't yours.
 
-### 6. Certificate verification URLs — `src/data/certifications.ts`
+### 5. Certificate verification URLs — `src/data/certifications.ts`
 
 Every `credentialUrl` currently points at that certificate's own PDF served from this site, so
 **View Certificate** opens the real document. If Cisco, DICT-ITU or Fortinet ever issues you a
@@ -169,6 +162,13 @@ stranger can check is worth more than a PDF you host yourself.
 
 These need no action, only a note so you know where they came from:
 
+- **Portrait** — `public/images/profile/jessica-miranda.jpg` came from
+  `Professional Portrait with Glasses and Blazer.png` in your Downloads. The source was already
+  exactly 4:5, so nothing was cropped — only downscaled from 1122×1402 to 1000×1250 and re-encoded
+  as JPEG, which took it from several megabytes to 110 KB. The hero shows it full-bleed with a soft
+  fade at its left edge rather than in a frame; that fade is what lets its studio-grey background
+  sit against the page without reading as a pasted-on rectangle. To swap in a newer photo, overwrite
+  that file — no code changes.
 - **Resume** — `public/resume/Jessica-Lindsey-Miranda-Resume.pdf` is your actual resume, exported
   from `Jessica_Resume_Updated_Certifications.docx`. Its two placeholder fields were resolved first:
   the Accentline training period became **Apr 2026 – May 2026** (your LinkedIn dates), and the two
@@ -300,6 +300,31 @@ accent / accent-solid / accent-fg / accent-soft
 warn / warn-soft                 placeholder and warning states
 ```
 
+### The hero
+
+The opening screen is built as three z-layers inside one `isolate` section:
+
+1. a pale watermark reading **ASPIRING IT PROFESSIONAL**, set in `font-mega` and clipped by the
+   section;
+2. the portrait, bleeding off the right edge and masked with **two nested gradients** — one fading
+   its left edge into the canvas, one fading its top out from behind the nav bar;
+3. the copy, held to a measure that stops short of the photograph.
+
+Two details worth knowing before editing it:
+
+- **The name is data, not markup.** `profile.nameLines` splits it into two, and the second line is
+  set in the accent colour. The split is yours to move — `["Jessica Lindsey", "Miranda"]` is a
+  judgement about where it reads best, not a rule.
+- **Why nested masks instead of `mask-composite: intersect`.** Two gradients in one `mask-image`
+  need a composite function, whose support and prefixes are still uneven. Nesting one masked
+  element inside another composes identically everywhere. The top fade is not decoration: without
+  it the portrait's studio-grey background runs up behind the nav links and destroys their
+  contrast in dark mode.
+
+`font-mega` (Archivo Black) is deliberately scoped to the hero name alone. It is a single-weight
+face with no companion italic or lighter weights, so it cannot carry a heading hierarchy — Sora
+still does that.
+
 ### Changing the accent colour
 
 Set `--accent`, `--accent-solid`, `--accent-fg` and `--accent-soft` in both the `:root` and
@@ -311,10 +336,26 @@ The current palette was contrast-checked against WCAG AA:
 
 | Pairing                       | Light   | Dark    |
 | ----------------------------- | ------- | ------- |
-| Body text on background       | ~18:1   | ~15:1   |
-| Muted text on background      | ~5.9:1  | ~8.3:1  |
-| Accent text on background     | ~7.4:1  | ~13.3:1 |
-| Button label on button fill   | ~5.6:1  | ~5.6:1  |
+| Body text on background       | 15.11:1 | 15.11:1 |
+| Muted text on background      | 7.19:1  | 9.05:1  |
+| Accent text on background     | 4.65:1  | 4.55:1  |
+| Button label on button fill   | 4.55:1  | 4.55:1  |
+
+The palette is Floral White, Silver, Charcoal Brown, Carbon Black and Spicy Paprika. Two things
+about the accent are worth knowing before you touch it, because Spicy Paprika fails AA in both of
+the places you would most want to reach for it: **3.32:1 as text on Floral White**, and **3.41:1
+under white text on a fill**. So:
+
+- `--accent-solid` keeps the exact `#eb5e28` swatch, but always takes **Carbon Black** text via
+  `--accent-fg` (4.55:1). Never put white on it.
+- The light-mode *text* token `--accent` is deepened to `#c8481b` to clear 4.5:1 on cream. In dark
+  mode the exact swatch works as text, so it needs no deepening.
+
+Silver is 1.67:1 on cream, which is right for a hairline and wrong for a form field — that is what
+`--line-strong` is for.
+
+The one place the brighter fill is used as text is the hero surname, where the type is far above
+the WCAG "large text" threshold of 3:1.
 
 If you change colours, re-check them — `--accent-fg` on `--accent-solid` is the easiest one to
 break.
@@ -375,7 +416,7 @@ The app is fully static, so it can also be exported to a static host — add `ou
 
 **Fonts look wrong on first load.**
 `next/font` fetches and self-hosts fonts at build time. Run `npm run build` once with a network
-connection, or check that `Sora`, `Inter` and `JetBrains_Mono` aren't blocked.
+connection, or check that `Archivo_Black`, `Sora`, `Inter` and `JetBrains_Mono` aren't blocked.
 
 **The contact form opens my mail client instead of sending.**
 `NEXT_PUBLIC_CONTACT_ENDPOINT` isn't set. See [Contact form setup](#contact-form-setup).

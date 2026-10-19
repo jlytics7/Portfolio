@@ -6,7 +6,7 @@
   role="img"
   aria-label="Jessica Lindsey Miranda"
 >
-  <rect width="64" height="64" rx="14" fill="#080c0e" />
+  <rect width="64" height="64" rx="14" fill="#252422" />
   <rect
     x="1"
     y="1"
@@ -14,8 +14,8 @@
     height="62"
     rx="13"
     fill="none"
-    stroke="#2dd4bf"
-    stroke-opacity="0.35"
+    stroke="#eb5e28"
+    stroke-opacity="0.45"
     stroke-width="2"
   />
   <text
@@ -26,7 +26,7 @@
     font-size="22"
     font-weight="600"
     letter-spacing="0.5"
-    fill="#2dd4bf"
+    fill="#eb5e28"
   >
     JLM
   </text>

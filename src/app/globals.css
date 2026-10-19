@@ -15,68 +15,78 @@
    names (`bg-canvas`, `text-ink`, `border-line`), so switching themes is
    purely a matter of these values changing.
 
+   Palette: Floral White, Silver, Charcoal Brown, Carbon Black, Spicy Paprika.
+
    All pairings below were checked against WCAG AA:
-     light  ink on canvas  ~18:1   muted on canvas  ~5.9:1
-     dark   ink on canvas  ~15:1   muted on canvas  ~8.3:1
-     accent text (light)    7.4:1  accent text (dark) 13.3:1
-     accent-fg on accent-solid  5.6:1 (light and dark)
+     light  ink on canvas 15.11:1  muted on canvas  7.19:1  subtle 5.61:1
+     dark   ink on canvas 15.11:1  muted on canvas  9.05:1  subtle 6.00:1
+     accent text (light)  4.65:1   accent text (dark) 4.55:1
+     accent-fg on accent-solid  4.55:1 (light and dark)
+
+   Spicy Paprika (#eb5e28) fails AA in both of its tempting uses: 3.32:1 as
+   text on Floral White, and 3.41:1 under white text on a fill. So fills keep
+   the exact swatch but take Carbon Black text, and light-mode accent *text*
+   deepens to #c8481b (4.65:1) - same hue, just further down the ramp.
+
+   Silver is 1.67:1 on cream. That is right for a hairline or a divider and
+   wrong for a form field, so `line-strong` carries the inputs in both themes.
    ========================================================================== */
 
 :root {
   color-scheme: light;
 
-  --canvas: #fafbfb;
-  --canvas-subtle: #f2f5f5;
+  --canvas: #fffcf2; /* Floral White */
+  --canvas-subtle: #f7f2e7;
   --surface: #ffffff;
-  --surface-hover: #f7fafa;
+  --surface-hover: #fbf7ee;
 
-  --line: #e3e9e9;
-  --line-strong: #cfd9da;
+  --line: #ccc5b9; /* Silver */
+  --line-strong: #8a847c;
 
-  --ink: #0c1416;
-  --ink-muted: #55676c;
-  --ink-subtle: #79898e;
+  --ink: #252422; /* Carbon Black */
+  --ink-muted: #5a554e;
+  --ink-subtle: #6b655e;
 
   /* Accent, split by job: `accent` for text/icons, `accent-solid` for fills. */
-  --accent: #0f5f58;
-  --accent-solid: #12a594;
-  --accent-solid-hover: #0e8c7e;
-  --accent-fg: #04201d;
-  --accent-soft: #e4f5f2;
+  --accent: #c8481b;
+  --accent-solid: #eb5e28; /* Spicy Paprika, exact */
+  --accent-solid-hover: #d14e1c;
+  --accent-fg: #252422;
+  --accent-soft: rgba(235, 94, 40, 0.1);
 
   --warn: #8a5a08;
-  --warn-soft: #fdf3dc;
+  --warn-soft: #fbeedd;
 
   --grain-opacity: 0.035;
-  --glow: rgba(18, 165, 148, 0.14);
+  --glow: rgba(235, 94, 40, 0.13);
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --canvas: #080c0e;
-  --canvas-subtle: #0d1215;
-  --surface: #101619;
-  --surface-hover: #151d21;
+  --canvas: #252422; /* Carbon Black */
+  --canvas-subtle: #2b2926;
+  --surface: #302d29;
+  --surface-hover: #37342f;
 
-  --line: #1e282c;
-  --line-strong: #2c3a3f;
+  --line: #403d39; /* Charcoal Brown */
+  --line-strong: #5c574f;
 
-  --ink: #e9f0f1;
-  --ink-muted: #9aacb1;
-  --ink-subtle: #74878c;
+  --ink: #fffcf2; /* Floral White */
+  --ink-muted: #ccc5b9; /* Silver */
+  --ink-subtle: #a7a099;
 
-  --accent: #5eead4;
-  --accent-solid: #2dd4bf;
-  --accent-solid-hover: #5eead4;
-  --accent-fg: #04201d;
-  --accent-soft: rgba(45, 212, 191, 0.1);
+  --accent: #eb5e28; /* Spicy Paprika, exact */
+  --accent-solid: #eb5e28;
+  --accent-solid-hover: #ff7442;
+  --accent-fg: #252422;
+  --accent-soft: rgba(235, 94, 40, 0.1);
 
   --warn: #fbbf24;
   --warn-soft: rgba(251, 191, 36, 0.12);
 
   --grain-opacity: 0.05;
-  --glow: rgba(45, 212, 191, 0.12);
+  --glow: rgba(235, 94, 40, 0.14);
 }
 
 /* ==========================================================================
@@ -111,6 +121,8 @@
   --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  /* Hero name only — the one place that needs a face this heavy. */
+  --font-mega: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 
   /* Section rhythm — one source of truth for vertical spacing. */
   --spacing-section: 6rem;

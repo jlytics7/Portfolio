@@ -10,8 +10,14 @@ export default function manifest(): MetadataRoute.Manifest {
     description: siteConfig.shortDescription,
     start_url: "/",
     display: "standalone",
-    background_color: "#080c0e",
-    theme_color: "#12a594",
+    /**
+     * A manifest can only name one colour, but this site has two themes. The
+     * per-theme `<meta name="theme-color">` in layout.tsx overrides this in
+     * every browser that supports it, so these only cover the fallback case —
+     * the light pair, which is the more common default.
+     */
+    background_color: "#fffcf2",
+    theme_color: "#fffcf2",
     icons: [
       {
         src: "/icon.svg",

@@ -46,6 +46,13 @@ export interface Profile {
   shortName: string;
   /** 2–4 characters shown in the logo mark. */
   initials: string;
+  /**
+   * The hero sets the name across two lines, with the second line in the
+   * accent colour. Split it where it reads best — the surname usually takes
+   * its own line. `fullName` remains the single-line form used everywhere
+   * else: metadata, JSON-LD, the nav label and the footer.
+   */
+  nameLines: [string, string];
   headline: string;
   /** Small chip under the hero headline. Set to null to hide it. */
   availabilityNote: string | null;

@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-label="Photography placeholder">
   <defs>
     <linearGradient id="bg-photo-01" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0b1013"/>
-      <stop offset="1" stop-color="#151e22"/>
+      <stop offset="0" stop-color="#1c1b18"/>
+      <stop offset="1" stop-color="#2f2c27"/>
     </linearGradient>
     <pattern id="grid-photo-01" width="64" height="64" patternUnits="userSpaceOnUse">
-      <path d="M64 0H0V64" fill="none" stroke="#26343a" stroke-width="1"/>
+      <path d="M64 0H0V64" fill="none" stroke="#3a362f" stroke-width="1"/>
     </pattern>
     <radialGradient id="glow-photo-01" cx="0.5" cy="0.42" r="0.55">
-      <stop offset="0" stop-color="#2dd4bf" stop-opacity="0.20"/>
-      <stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/>
+      <stop offset="0" stop-color="#eb5e28" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#eb5e28" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="1200" height="1500" fill="url(#bg-photo-01)"/>
   <rect width="1200" height="1500" fill="url(#grid-photo-01)" opacity="0.35"/>
   <rect width="1200" height="1500" fill="url(#glow-photo-01)"/>
   <g>
-      <circle cx="600" cy="678" r="276" fill="none" stroke="#2dd4bf" stroke-opacity="0.4" stroke-width="3.5999999999999996"/>
-      <circle cx="600" cy="678" r="110.39999999999999" fill="#2dd4bf" fill-opacity="0.2"/></g>
-  <text x="600" y="1404" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="34" letter-spacing="6" fill="#8ba1a6">PHOTO PLACEHOLDER</text>
-  <text x="600" y="1444" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="26" letter-spacing="3" fill="#54666b">REPLACE IN SRC/DATA/GALLERY.TS</text>
+      <circle cx="600" cy="678" r="276" fill="none" stroke="#eb5e28" stroke-opacity="0.4" stroke-width="3.5999999999999996"/>
+      <circle cx="600" cy="678" r="110.39999999999999" fill="#eb5e28" fill-opacity="0.2"/></g>
+  <text x="600" y="1404" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="34" letter-spacing="6" fill="#ccc5b9">PHOTO PLACEHOLDER</text>
+  <text x="600" y="1444" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="26" letter-spacing="3" fill="#8a847c">REPLACE IN SRC/DATA/GALLERY.TS</text>
 </svg>

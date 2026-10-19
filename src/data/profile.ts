@@ -15,6 +15,7 @@ export const profile: Profile = {
   fullName: "Jessica Lindsey Miranda",
   shortName: "Jessica Miranda",
   initials: "JLM",
+  nameLines: ["Jessica Lindsey", "Miranda"],
   headline: "Aspiring IT Professional",
 
   // Set to `null` to hide the chip entirely.
@@ -52,9 +53,9 @@ export const profile: Profile = {
   ],
 
   // Square image works best (rendered around 4:5 on desktop).
-  photo: "/images/profile/profile-placeholder.svg",
+  photo: "/images/profile/jessica-miranda.jpg",
   photoAlt:
-    "Portrait placeholder for Jessica Lindsey Miranda — replace with your own photo.",
+    "Jessica Lindsey Miranda, wearing glasses and a dark pinstripe blazer, against a plain light background.",
 
   resume: {
     url: "/resume/Jessica-Lindsey-Miranda-Resume.pdf",

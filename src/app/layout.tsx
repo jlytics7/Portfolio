@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Sora } from "next/font/google";
+import { Archivo_Black, Inter, JetBrains_Mono, Sora } from "next/font/google";
 
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
@@ -37,6 +37,18 @@ const inter = Inter({
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+/**
+ * Single weight, so this costs one small file. Sora tops out at 800 and stays
+ * fairly wide — the hero wants a face that is genuinely heavy at a very large
+ * size. Used for the hero name and nothing else.
+ */
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo",
+  weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
@@ -98,8 +110,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafbfb" },
-    { media: "(prefers-color-scheme: dark)", color: "#080c0e" },
+    { media: "(prefers-color-scheme: light)", color: "#fffcf2" },
+    { media: "(prefers-color-scheme: dark)", color: "#252422" },
   ],
 };
 
@@ -126,7 +138,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       // Tells Next.js to override smooth scrolling during route transitions,
       // so client-side navigation stays snappy while anchors stay smooth.
       data-scroll-behavior="smooth"
-      className={`${sora.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${sora.variable} ${archivoBlack.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

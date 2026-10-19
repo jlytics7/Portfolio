@@ -24,12 +24,6 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 const STORAGE_KEY = "theme";
 
-/** Mirrors `--canvas` in `globals.css`. Keep the two in sync. */
-const CANVAS_COLOR: Record<Theme, string> = {
-  light: "#fafbfb",
-  dark: "#080c0e",
-};
-
 /**
  * The `data-theme` attribute on <html> is the single source of truth.
  *
@@ -48,11 +42,22 @@ function applyTheme(theme: Theme) {
    * preference via their media attributes, which is the right no-JS default
    * but wrong once someone flips the site's own toggle. Overwriting them here
    * keeps the mobile browser chrome in step with what's actually on screen.
+   *
+   * The value is read back off the cascade rather than kept in a constant.
+   * A hardcoded map has to be edited in lockstep with `--canvas`, and the
+   * moment it isn't the browser chrome silently disagrees with the page — so
+   * asking the element itself is both less code and impossible to get stale.
    */
+  const canvas = getComputedStyle(document.documentElement)
+    .getPropertyValue("--canvas")
+    .trim();
+
+  if (!canvas) return;
+
   for (const meta of document.querySelectorAll<HTMLMetaElement>(
     'meta[name="theme-color"]',
   )) {
-    meta.content = CANVAS_COLOR[theme];
+    meta.content = canvas;
   }
 }
 
