@@ -58,7 +58,8 @@ export const certifications: Certification[] = [
     issuer: "Cisco Networking Academy",
     dateIssued: "11 October 2026",
     credentialId: "aeea9226-2465-4441-911b-4ff1fc418986",
-    credentialUrl: "/certificates/Networking-Devices-and-Initial-Configuration.pdf",
+    credentialUrl:
+      "/certificates/networking-basic-for-jessica-lindsey-miranda.pdf",
     image: "/images/certifications/networking-devices-initial-configuration.jpg",
     imageAlt:
       "Cisco Networking Academy certificate awarded to Jessica Lindsey Miranda for completing Networking Devices and Initial Configuration, 11 October 2026.",
