@@ -12,39 +12,45 @@ import type { GalleryItem } from "@/types/content";
  *   4. Write a real `alt` sentence describing the photo for screen readers
  *
  * Landscape and portrait images mix well here; the grid fills one row at a
- * time. Wide (landscape) images span the full row so the grid never leaves a
- * hole beneath a short column — keep the wide image last in the list.
- *
- * Note: `photo-02` is a reserved slot — the second image has not been exported
- * yet, so entries run photo-01, photo-03, photo-04, photo-05.
+ * time. Wide (landscape) images span more columns so the grid never leaves a
+ * hole beneath a short column.
  */
 export const galleryItems: GalleryItem[] = [
   {
     id: "photo-01",
     src: "/images/photography/photo-01.jpg",
-    alt: "Amber and cream concentric curves sweeping across a dark, textured surface.",
-    caption: "Concentric curves in amber and cream",
-    tag: "Colour study",
-    width: 206,
-    height: 206,
+    alt: "Portrait-format photography study in soft, natural tones.",
+    caption: "Soft tones portrait study",
+    tag: "Photography",
+    width: 532,
+    height: 800,
+  },
+  {
+    id: "photo-02",
+    src: "/images/photography/photo-02.jpg",
+    alt: "Landscape-format photography with balanced composition and natural light.",
+    caption: "Balanced landscape study",
+    tag: "Photography",
+    width: 800,
+    height: 532,
   },
   {
     id: "photo-03",
     src: "/images/photography/photo-03.jpg",
-    alt: "Teal and ivory organic forms drifting over a black background with hints of crimson.",
-    caption: "Teal and ivory forms against black",
-    tag: "Colour study",
-    width: 206,
-    height: 206,
+    alt: "Portrait-format photography with rich, warm color palette.",
+    caption: "Warm palette portrait study",
+    tag: "Photography",
+    width: 532,
+    height: 800,
   },
   {
     id: "photo-04",
     src: "/images/photography/photo-04.jpg",
-    alt: "Clusters of saturated red, green, blue and white spheres bunched together on black.",
-    caption: "Saturated clusters, held on black",
-    tag: "Colour study",
-    width: 206,
-    height: 206,
+    alt: "Landscape-format photography showing open space and texture.",
+    caption: "Open texture landscape study",
+    tag: "Photography",
+    width: 800,
+    height: 532,
   },
   {
     id: "photo-05",

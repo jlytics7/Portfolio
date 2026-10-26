@@ -19,11 +19,12 @@ import { cn } from "@/lib/utils";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Every photo spans the full row so the gallery has the same layout across
- * all images — matching the "Between two frames" wide-photo treatment.
+ * Landscape images span wider than portrait ones so the grid stays balanced:
+ * portrait photos keep a normal column width, landscape photos take more room.
+ * No image is stretched beyond a comfortable standard size.
  */
-function isWide(_item: GalleryItem) {
-  return true;
+function isWide(item: GalleryItem) {
+  return item.width / item.height >= 1.3;
 }
 
 /** The client snapshot never changes, so there is nothing to subscribe to. */
