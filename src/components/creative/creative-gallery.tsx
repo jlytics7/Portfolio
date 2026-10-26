@@ -229,7 +229,7 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 justify-center lg:justify-start">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 justify-center">
         {items.map((item, index) => (
           <button
             key={item.id}
