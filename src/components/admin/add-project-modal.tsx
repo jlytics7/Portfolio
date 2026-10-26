@@ -8,6 +8,7 @@ import {
   DialogCloseButton,
   DialogDescription,
   DialogFooter,
+  DialogFooterActions,
   DialogPanel,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -176,11 +177,11 @@ export function AddProjectModal({ open, onClose }: { open: boolean; onClose: () 
           </div>
 
           <div className="flex flex-col gap-3">
-            <div className="flex items-baseline gap-2">
-              <label className="font-mono text-[0.6875rem] tracking-wider text-ink-muted uppercase">Tech stack</label>
-              <div className="flex gap-2">
-                <Input value={tech} onChange={(e) => setTech(e.target.value)} placeholder="e.g. React, TypeScript" />
-                <Button onClick={addTech} size="sm">Add</Button>
+            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-2">
+              <label className="font-mono text-[0.6875rem] tracking-wider text-ink-muted uppercase sm:shrink-0">Tech stack</label>
+              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <Input value={tech} onChange={(e) => setTech(e.target.value)} placeholder="e.g. React, TypeScript" className="w-full sm:w-auto" />
+                <Button onClick={addTech} size="sm" className="w-full sm:w-auto">Add</Button>
               </div>
             </div>
             {(form.tech ?? []).length > 0 && (
@@ -196,11 +197,11 @@ export function AddProjectModal({ open, onClose }: { open: boolean; onClose: () 
           </div>
 
           <div className="flex flex-col gap-3">
-            <div className="flex items-baseline gap-2">
-              <label className="font-mono text-[0.6875rem] tracking-wider text-ink-muted uppercase">Features</label>
-              <div className="flex gap-2">
-                <Input value={feature} onChange={(e) => setFeature(e.target.value)} placeholder="e.g. User authentication" />
-                <Button onClick={addFeature} size="sm">Add</Button>
+            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-2">
+              <label className="font-mono text-[0.6875rem] tracking-wider text-ink-muted uppercase sm:shrink-0">Features</label>
+              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <Input value={feature} onChange={(e) => setFeature(e.target.value)} placeholder="e.g. User authentication" className="w-full sm:w-auto" />
+                <Button onClick={addFeature} size="sm" className="w-full sm:w-auto">Add</Button>
               </div>
             </div>
             {(form.features ?? []).length > 0 && (
@@ -225,10 +226,12 @@ export function AddProjectModal({ open, onClose }: { open: boolean; onClose: () 
         </form>
 
         <DialogFooter>
-          <Button variant="secondary" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleCopy} disabled={!form.slug || !form.title}>
-            {copyMessage ? "Copied!" : "Copy TypeScript Snippet"}
-          </Button>
+          <DialogFooterActions>
+            <Button variant="secondary" onClick={onClose}>Cancel</Button>
+            <Button onClick={handleCopy} disabled={!form.slug || !form.title}>
+              {copyMessage ? "Copied!" : "Copy TypeScript Snippet"}
+            </Button>
+          </DialogFooterActions>
         </DialogFooter>
 
         {snippet && (

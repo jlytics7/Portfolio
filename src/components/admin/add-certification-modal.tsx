@@ -8,6 +8,7 @@ import {
   DialogCloseButton,
   DialogDescription,
   DialogFooter,
+  DialogFooterActions,
   DialogPanel,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -96,10 +97,12 @@ export function AddCertificationModal({ open, onClose }: { open: boolean; onClos
         </form>
 
         <DialogFooter>
-          <Button variant="secondary" onClick={onClose}>Cancel</Button>
-          <Button onClick={handleCopy} disabled={!form.id || !form.title}>
-            {copyMessage ? "Copied!" : "Copy TypeScript Snippet"}
-          </Button>
+          <DialogFooterActions>
+            <Button variant="secondary" onClick={onClose}>Cancel</Button>
+            <Button onClick={handleCopy} disabled={!form.id || !form.title}>
+              {copyMessage ? "Copied!" : "Copy TypeScript Snippet"}
+            </Button>
+          </DialogFooterActions>
         </DialogFooter>
 
         {snippet && (

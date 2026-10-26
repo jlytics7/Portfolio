@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -64,7 +64,7 @@ export function Dialog({ open, onClose, children }: DialogProps) {
         aria-hidden="true"
       />
       <div
-        className="relative z-10 w-full max-w-lg mx-auto p-4 sm:p-6"
+        className="relative z-10 w-full max-w-2xl mx-auto p-4 sm:p-6 md:p-8 max-h-[90vh] overflow-y-auto"
         role="dialog"
         aria-modal="true"
       >
@@ -117,6 +117,25 @@ export function DialogFooter({ children, className }: DialogFooterProps) {
   return (
     <div className={cn("mt-6 flex flex-col sm:flex-row sm:justify-end gap-3", className)}>
       {children}
+    </div>
+  );
+}
+
+/**
+ * Make footer buttons full-width on mobile, side-by-side on larger screens.
+ */
+export function DialogFooterActions({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={cn("flex flex-col sm:flex-row gap-2 w-full", className)}>
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) return child;
+        return React.cloneElement(child as React.ReactElement, {
+          className: cn(
+            (child as React.ReactElement).props.className,
+            "w-full sm:w-auto",
+          ),
+        });
+      })}
     </div>
   );
 }
