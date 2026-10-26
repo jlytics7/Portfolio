@@ -3,10 +3,7 @@
 import { AnimatePresence, m } from "framer-motion";
 import { useMemo, useState } from "react";
 
-import {
-  FutureProjectsCard,
-  ProjectCard,
-} from "@/components/projects/project-card";
+import { ProjectCard } from "@/components/projects/project-card";
 import { projectFilters } from "@/data/projects";
 import type { Project, ProjectCategory } from "@/types/content";
 import { cn } from "@/lib/utils";
@@ -48,9 +45,6 @@ export function ProjectExplorer({ projects }: { projects: Project[] }) {
           ),
     [projects, activeFilter],
   );
-
-  // The "more to come" slot only belongs in the unfiltered view.
-  const showFutureCard = activeFilter === "all";
 
   return (
     <div>
@@ -127,10 +121,6 @@ export function ProjectExplorer({ projects }: { projects: Project[] }) {
               />
             );
           })}
-
-          {showFutureCard ? (
-            <FutureProjectsCard key="future-projects" className="md:col-span-2" />
-          ) : null}
         </AnimatePresence>
       </div>
 
