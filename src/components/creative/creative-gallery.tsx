@@ -14,8 +14,19 @@ import { createPortal } from "react-dom";
 
 import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll";
 import type { GalleryItem } from "@/types/content";
+import { cn } from "@/lib/utils";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+/**
+ * Landscape images read badly at one-third width, so they take the full row
+ * instead. That also keeps the grid balanced: three squares fill the first
+ * row, the wide photo fills the next one, and no column ends early with a
+ * hole beneath it.
+ */
+function isWide(item: GalleryItem) {
+  return item.width / item.height >= 1.3;
+}
 
 /** The client snapshot never changes, so there is nothing to subscribe to. */
 const subscribeNoop = () => () => {};
@@ -181,9 +192,13 @@ function PhotoLightbox({
 /**
  * Photography gallery.
  *
- * A CSS masonry column layout rather than a fixed grid, so portrait and
- * landscape images sit together without awkward cropping. Clicking any tile
- * opens the lightbox, and focus returns to that tile when it closes.
+ * A grid rather than a CSS column "masonry": masonry balances uneven column
+ * heights by leaving a hole at the bottom of the shorter ones, which showed up
+ * as a large blank block once the images stopped being equal-sized tiles.
+ * Landscape images span the full row for the same reason (see `isWide`).
+ *
+ * Clicking any tile opens the lightbox, and focus returns to that tile when it
+ * closes.
  */
 export function CreativeGallery({ items }: { items: GalleryItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -214,7 +229,7 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item, index) => (
           <button
             key={item.id}
@@ -224,15 +239,22 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
             type="button"
             onClick={() => setOpenIndex(index)}
             aria-label={`Open image: ${item.caption}`}
-            className="group relative mb-4 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-line bg-canvas-subtle text-left"
+            className={cn(
+              "group relative block w-full overflow-hidden rounded-2xl border border-line bg-canvas-subtle text-left",
+              isWide(item) && "lg:col-span-3",
+            )}
           >
             <Image
               src={item.src}
               alt={item.alt}
               width={item.width}
               height={item.height}
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
-              className="h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+              sizes={
+                isWide(item)
+                  ? "(min-width: 1024px) 1152px, (min-width: 640px) 92vw, 92vw"
+                  : "(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
+              }
+              className="h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:h-full"
             />
 
             {/* Caption reveal */}

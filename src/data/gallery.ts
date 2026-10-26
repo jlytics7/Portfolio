@@ -11,7 +11,9 @@ import type { GalleryItem } from "@/types/content";
  *      keep the grid from shifting while images load
  *   4. Write a real `alt` sentence describing the photo for screen readers
  *
- * Landscape and portrait images mix well here; the grid is a masonry layout.
+ * Landscape and portrait images mix well here; the grid fills one row at a
+ * time. Wide (landscape) images span the full row so the grid never leaves a
+ * hole beneath a short column — keep the wide image last in the list.
  *
  * Note: `photo-02` is a reserved slot — the second image has not been exported
  * yet, so entries run photo-01, photo-03, photo-04, photo-05.
