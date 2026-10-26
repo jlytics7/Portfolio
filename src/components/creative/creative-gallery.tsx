@@ -19,13 +19,11 @@ import { cn } from "@/lib/utils";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Landscape images read badly at one-third width, so they take the full row
- * instead. That also keeps the grid balanced: three squares fill the first
- * row, the wide photo fills the next one, and no column ends early with a
- * hole beneath it.
+ * Every photo spans the full row so the gallery has the same layout across
+ * all images — matching the "Between two frames" wide-photo treatment.
  */
 function isWide(item: GalleryItem) {
-  return item.width / item.height >= 1.3;
+  return true;
 }
 
 /** The client snapshot never changes, so there is nothing to subscribe to. */
@@ -256,10 +254,7 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
                   : "(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               }
               className={cn(
-                "h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:h-full",
-                // Never stretch small source images beyond their natural
-                // resolution — that is what makes them look blurry.
-                item.width < 600 && "max-w-[206px] max-h-[206px] mx-auto"
+                "h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:h-full"
               )}
             />
 
