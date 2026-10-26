@@ -6,11 +6,6 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   images: {
     /**
-     * Default quality for optimized images. Bumped to 100 so source
-     * photographs render as sharply as the original file allows.
-     */
-    quality: 100,
-    /**
      * Image widths Next.js will generate on demand. Small source files
      * (e.g. the 206px photography thumbnails) won't be upscaled beyond
      * their intrinsic size, which prevents blur from upsampling.
