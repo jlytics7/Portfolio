@@ -249,12 +249,18 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
               alt={item.alt}
               width={item.width}
               height={item.height}
+              quality={100}
               sizes={
                 isWide(item)
                   ? "(min-width: 1024px) 1152px, (min-width: 640px) 92vw, 92vw"
                   : "(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               }
-              className="h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:h-full"
+              className={cn(
+                "h-auto w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] sm:h-full",
+                // Never stretch small source images beyond their natural
+                // resolution — that is what makes them look blurry.
+                item.width < 600 && "max-w-[206px] max-h-[206px] mx-auto"
+              )}
             />
 
             {/* Caption reveal */}

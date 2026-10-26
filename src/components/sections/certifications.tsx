@@ -1,9 +1,15 @@
+"use client";
+
+import { Plus } from "lucide-react";
 import { Award, ExternalLink } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 import { CertificationStatusBadge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { AddCertificationModal } from "@/components/admin/add-certification-modal";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import {
@@ -68,6 +74,7 @@ function CertificationCard({
             alt={certification.imageAlt}
             fill
             sizes="(min-width: 1280px) 33vw, (min-width: 768px) 45vw, 92vw"
+            quality={100}
             className="object-contain"
           />
         ) : (
@@ -148,6 +155,8 @@ function CertificationCard({
  * a copy-paste of one object; no changes to this component are needed.
  */
 export function Certifications() {
+  const [addCertificationOpen, setAddCertificationOpen] = useState(false);
+
   return (
     <Section id="certifications" labelledBy="certifications-heading">
       <SectionHeading
@@ -156,6 +165,13 @@ export function Certifications() {
         title="Credentials, and the progress towards them."
         description="Each entry shows the certificate itself, with a link to open it in full."
       />
+
+      <div className="flex justify-between items-end mb-4">
+        <Button variant="primary" size="sm" onClick={() => setAddCertificationOpen(true)}>
+          <Plus className="size-4" aria-hidden /> Add Certificate
+        </Button>
+        <AddCertificationModal open={addCertificationOpen} onClose={() => setAddCertificationOpen(false)} />
+      </div>
 
       {certifications.length === 0 ? (
         <p className="rounded-2xl border border-dashed border-line-strong bg-canvas-subtle px-6 py-12 text-center text-sm text-ink-muted">

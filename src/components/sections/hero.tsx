@@ -55,6 +55,7 @@ export function Hero() {
             alt={profile.photoAlt}
             fill
             priority
+            quality={100}
             sizes="46vw"
             className="object-cover object-top"
           />
@@ -173,6 +174,7 @@ export function Hero() {
             src={profile.photo}
             alt={profile.photoAlt}
             fill
+            quality={100}
             sizes="100vw"
             className="object-cover object-top"
           />

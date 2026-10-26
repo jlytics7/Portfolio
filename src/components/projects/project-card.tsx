@@ -40,6 +40,7 @@ function ProjectMedia({
         fill
         sizes={sizes}
         priority={priority}
+        quality={100}
         className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.03]"
       />
       <div className="absolute top-3 right-3">
