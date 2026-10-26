@@ -22,7 +22,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
  * Every photo spans the full row so the gallery has the same layout across
  * all images — matching the "Between two frames" wide-photo treatment.
  */
-function isWide(item: GalleryItem) {
+function isWide(_item: GalleryItem) {
   return true;
 }
 
