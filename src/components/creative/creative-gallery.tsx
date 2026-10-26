@@ -19,9 +19,10 @@ import { cn } from "@/lib/utils";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Landscape images span wider than portrait ones so the grid stays balanced:
- * portrait photos keep a normal column width, landscape photos take more room.
- * No image is stretched beyond a comfortable standard size.
+ * Landscape images span 2 of 3 columns so the grid stays balanced:
+ * portrait photos keep 1 column, landscape photos take 2 — no image is
+ * stretched full width. Items are centered so a lone tile on the last row
+ * doesn't look orphaned to one side.
  */
 function isWide(item: GalleryItem) {
   return item.width / item.height >= 1.3;
@@ -228,7 +229,7 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 justify-center lg:justify-start">
         {items.map((item, index) => (
           <button
             key={item.id}
@@ -240,7 +241,7 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
             aria-label={`Open image: ${item.caption}`}
             className={cn(
               "group relative block w-full overflow-hidden rounded-2xl border border-line bg-canvas-subtle text-left",
-              isWide(item) && "lg:col-span-3",
+              isWide(item) && "lg:col-span-2",
             )}
           >
             <Image
@@ -251,7 +252,7 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
               quality={100}
               sizes={
                 isWide(item)
-                  ? "(min-width: 1024px) 1152px, (min-width: 640px) 92vw, 92vw"
+                  ? "(min-width: 1024px) 768px, (min-width: 640px) 92vw, 92vw"
                   : "(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               }
               className={cn(
