@@ -230,19 +230,26 @@ export function CreativeGallery({ items }: { items: GalleryItem[] }) {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-        {items.map((item, index) => (
-          <button
-            key={item.id}
-            ref={(element) => {
-              tileRefs.current[index] = element;
-            }}
-            type="button"
-            onClick={() => setOpenIndex(index)}
-            aria-label={`Open image: ${item.caption}`}
-            className={cn(
-              "group relative block w-full overflow-hidden rounded-2xl border border-line bg-canvas-subtle text-left",
-              isWide(item) && "lg:col-span-2",
-            )}
+        {items.map((item, index) => {
+          const isLast = index === items.length - 1;
+          // Center a lone item on the last row:
+          // - Landscape (2 cols): start at column 2 of 3, leaving 1 col empty on the left
+          // - Portrait (1 col): start at column 2 of 3, leaving 1 col empty on each side
+          const lastItemColStart = isLast ? "lg:col-start-2" : undefined;
+          return (
+            <button
+              key={item.id}
+              ref={(element) => {
+                tileRefs.current[index] = element;
+              }}
+              type="button"
+              onClick={() => setOpenIndex(index)}
+              aria-label={`Open image: ${item.caption}`}
+              className={cn(
+                "group relative block w-full overflow-hidden rounded-2xl border border-line bg-canvas-subtle text-left",
+                isWide(item) && "lg:col-span-2",
+                lastItemColStart,
+              )}
           >
             <Image
               src={item.src}
